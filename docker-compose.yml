@@ -1,0 +1,32 @@
+version: '3.8'
+
+services:
+  vmware_exporter_dc1:
+    image: pryorda/vmware_exporter
+    container_name: vmware_exporter_dc1
+    ports:
+      - "9272:9272"
+    dns:
+      - 10.1.71.10
+      - 10.12.71.10
+    environment:
+      VSPHERE_HOST: ${DC1_HOST}
+      VSPHERE_USER: ${DC1_USER}
+      VSPHERE_PASSWORD: ${DC1_PASSWORD}
+      VSPHERE_IGNORE_SSL: "true"
+    restart: always
+
+  vmware_exporter_dc2:
+    image: pryorda/vmware_exporter
+    container_name: vmware_exporter_dc2
+    ports:
+      - "9273:9272"
+    dns:
+      - 10.12.71.10
+      - 10.1.71.10
+    environment:
+      VSPHERE_HOST: ${DC2_HOST}
+      VSPHERE_USER: ${DC2_USER}
+      VSPHERE_PASSWORD: ${DC2_PASSWORD}
+      VSPHERE_IGNORE_SSL: "true"
+    restart: always
